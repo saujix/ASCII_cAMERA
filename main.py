@@ -48,6 +48,7 @@ def conversion():
     for row in grayFrame:
 
         lineChar = ""
+        medianBrightness = []
 
         for pixelValue in row:
             
@@ -57,22 +58,30 @@ def conversion():
             #looking in which range it lies
             range = int(pixelValue/blockLen)
 
-            #putting the character in place of the pixel num
+            # putting the character in place of the pixel num
             char = asciiChar[int(range) - 1]
-
-
+            
+            # making an array for all the pixel (for median brightness)
+            medianBrightness.append(pixelValue)
+            
             lineChar += char
 
         resultAscii +=  lineChar + "\n"
     
-    
+    middlePoint = len(medianBrightness) // 2
     os.system(com)
-
+    
+    # sorting (for median)
+    medianBrightness.sort()
+    
     print(resultAscii)
+    
     print(f"""
         Columns: {columns}, Rows: {rows}
         More colums, better picture quality
+        Median Brightness : {int((medianBrightness[middlePoint]/255)*100)}%
         """)
+    
 
 if __name__ == "__main__":
     Status = True
